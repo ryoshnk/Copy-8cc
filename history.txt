@@ -1,9 +1,9 @@
 20161020/Initial checkin
   ・gcc -S *.c でテキストとしてアセンブラを出力可能
   ・8cc mymain を　_mymain に変更
-20161022/
+20161022/Added string literal.
   ・アセンブラの説明は右記を参照 http://www.picfun.com/c30/c3006.html
   ・アセンブラの説明は右記を参照 http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11116766816	
-  ・gcc49に変更
-  ・a expected but got 267452151 とテスト結果が出るが、のちに対応
-  ・コンパイル時にシンボル参照がないエラーが出るため、8cc.c が出力するtmp.s の内容を一部変更
+  ・gccのバージョンをgcc49に変更
+  ・コンパイル時にシンボル参照がないエラーが出るため、driver.c,test.shにプリプロセッサを制御する内容をついか
+  ・8cc.c が出力するtmp.s の内容を一部変更

@@ -6,7 +6,14 @@ function compile {
     echo "Failed to compile $1"
     exit
   fi
-  gcc -o tmp.out tmp.s driver.c
+  
+  n='^[0-9]+$'
+  if ! [[ $1 =~ $n ]] ; then
+    gcc -o tmp.out tmp.s driver.c
+  else 
+    gcc -o tmp.out tmp.s -D INTFN driver.c
+  fi
+
   if [ $? -ne 0 ]; then
     echo "GCC failed"
     exit
@@ -36,9 +43,9 @@ function testfail {
 make -s 8cc
 
 test 0 0
-test a '"a"'
+test abc '"abc"'
 
-#testfail '"abc'
-#testfail '0abc'
+testfail '"abc'
+testfail '0abc'
 
 echo "All tests passed"

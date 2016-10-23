@@ -24,10 +24,7 @@ void compile_number(int n) {
     n = n * 10 + (c - '0');
   }
   printf(".text\n\t"
-         ".globl _stringfn\n\t"
          ".globl _intfn\n"
-         "_stringfn:\n\t"
-         "ret\n"
          "_intfn:\n\t"
          "mov $%d, %%rax\n\t"
          "ret\n", n);
@@ -55,10 +52,7 @@ void compile_string(void) {
          ".mydata:\n\t"
          ".asciz \"%s\"\n\t"
          ".text\n\t"
-         ".globl _stringfn\n\t"
-         ".globl _intfn\n"
-         "_intfn:\n\t"
-         "ret\n"
+         ".globl _stringfn\n"
          "_stringfn:\n\t"
          "lea .mydata(%%rip), %%rax\n\t"
          "ret\n", buf);
