@@ -1,31 +1,15 @@
 #!/bin/bash
 
-function compile {
-  echo "$1" | ./8cc > tmp.s
-  if [ $? -ne 0 ]; then
-    echo "Failed to compile $1"
-    exit
-  fi
-  
-  n='^[0-9]+$'
-  if ! [[ $1 =~ $n ]] ; then
-    echo "Str"
-    gcc -o tmp.out tmp.s driver.c
-  else 
-    echo "Num"
-    gcc -o tmp.out tmp.s -D INTFN driver.c
-  fi
-
-  if [ $? -ne 0 ]; then
-    echo "GCC failed"
-    exit
-  fi
-}
-
 function test {
   expected="$1"
   expr="$2"
-  compile "$expr"
+
+  echo "$expr" | ./8cc > tmp.s
+  if [ ! $? ]; then
+    echo "Failed to compile $expr"
+    exit
+  fi
+  gcc -o tmp.out driver.c tmp.s || exit
   result="`./tmp.out`"
   if [ "$result" != "$expected" ]; then
     echo "Test failed: $expected expected but got $result"
@@ -33,21 +17,10 @@ function test {
   fi
 }
 
-function testfail {
-  expr="$1"
-  echo "$expr" | ./8cc > /dev/null 2>&1
-  if [ $? -eq 0 ]; then
-    echo "Should fail to compile, but succeded: $expr"
-    exit
-  fi
-}
-
 make -s 8cc
 
 test 0 0
-test abc '"abc"'
+test 42 42
 
-testfail '"abc'
-testfail '0abc'
-
+rm -f tmp.out tmp.s
 echo "All tests passed"
