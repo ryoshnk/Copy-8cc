@@ -7,7 +7,7 @@ function compile {
     exit
   fi
   
-  n='^[0-9]+$'
+  n='^[0-9]'
   if ! [[ $1 =~ $n ]] ; then
     gcc -o tmp.out tmp.s driver.c
   else 
@@ -45,7 +45,12 @@ make -s 8cc
 test 0 0
 test abc '"abc"'
 
+test 3 '2+1'
+#test 3 '1 + 2'
+#test 10 '1+2+3+4'
+
 testfail '"abc'
 testfail '0abc'
+testfail '2+'
 
 echo "All tests passed"
