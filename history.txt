@@ -11,3 +11,4 @@
   ・test.sh内の正規表現を変更
 20161029/Introduce AST.
   ・コンパイル時にシンボル参照がないエラーを、test.shのtestでオプションで判定し回避
+20161029/Introduce AST.
