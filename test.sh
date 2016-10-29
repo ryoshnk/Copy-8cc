@@ -1,16 +1,15 @@
 #!/bin/bash
 
 function compile {
-  echo "$1" | ./8cc > tmp.s
+  echo "$2" | ./8cc > tmp.s
   if [ $? -ne 0 ]; then
     echo "Failed to compile $1"
     exit
   fi
   
-  n='^[0-9]'
-  if ! [[ $1 =~ $n ]] ; then
+  if [[ $1 == "-S" ]] ; then
     gcc -o tmp.out tmp.s driver.c
-  else 
+  elif [[ $1 == "-I" ]] ; then
     gcc -o tmp.out tmp.s -D INTFN driver.c
   fi
 
@@ -20,15 +19,29 @@ function compile {
   fi
 }
 
-function test {
-  expected="$1"
-  expr="$2"
-  compile "$expr"
-  result="`./tmp.out`"
-  if [ "$result" != "$expected" ]; then
-    echo "Test failed: $expected expected but got $result"
+function assertequal {
+  if [ "$1" != "$2" ]; then
+    echo "Test failed: $2 expected but got $1"
     exit
   fi
+}
+
+function testast {
+  result="$(echo "$2" | ./8cc -a)"
+  if [ $? -ne 0 ]; then
+    echo "Failed to compile $1"
+    exit
+  fi
+  assertequal "$result" "$1"
+}
+
+function test {
+  if [ $# -ne 3 ]; then
+  echo "Should need 3 args, but typed $# args."
+  exit 1
+  fi
+  compile "$1" "$3"
+  assertequal "$(./tmp.out)" "$2"
 }
 
 function testfail {
@@ -42,15 +55,20 @@ function testfail {
 
 make -s 8cc
 
-test 0 0
-test abc '"abc"'
+testast '1' '1'
+testast '(+ (- (+ 1 2) 3) 4)' '1+2-3+4'
 
-test 3 '2+1'
-#test 3 '1 + 2'
-#test 10 '1+2+3+4'
+test -I 0 0
+test -S abc '"abc"'
+
+test -I 3 '1+2'
+test -I 3 '1 + 2'
+test -I 10 '1+2+3+4'
+test -I 4 '1+2-3+4'
 
 testfail '"abc'
 testfail '0abc'
-testfail '2+'
+testfail '1+'
+testfail '1+"abc"'
 
 echo "All tests passed"

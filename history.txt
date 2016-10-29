@@ -7,5 +7,7 @@
   ・gccのバージョンをgcc49に変更
   ・コンパイル時にシンボル参照がないエラーが出るため、driver.c,test.shにプリプロセッサを制御する内容をついか
   ・8cc.c が出力するtmp.s の内容を一部変更
-20161025/Added string literal.
-  ・test.sh内の正規表現を変奥	
+20161025/Added + and -.
+  ・test.sh内の正規表現を変更
+20161029/Introduce AST.
+  ・コンパイル時にシンボル参照がないエラーを、test.shのtestでオプションで判定し回避
