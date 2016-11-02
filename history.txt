@@ -14,3 +14,7 @@
 20161029/Added * and /.
 20161029/Remove string literal. Add varaible.
    ・アセンブラについて、右記を参照 http://qiita.com/edo_m18/items/83c63cd69f119d0b9831
+20161030/Add function call.
+   ・アセンブラについて、右記を参照 https://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/GAS%E3%81%A7%E3%81%AE%E6%96%87%E6%B3%95
+   ・アセンブラのセクションについて、右記を参照 http://www.ertl.jp/~takayuki/readings/info/no02.html
+   ・http://milkpot.sakura.ne.jp/note/x86.html
