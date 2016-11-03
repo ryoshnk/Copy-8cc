@@ -22,3 +22,4 @@
    ・test.shのL77が通らないが、L78が通るためのちに原因調査
    ・.stirngではエラーが出るため、.ascizを代用
 20161103/Remove struct Var and merge it with struct Ast.
+20161103/Added char.
