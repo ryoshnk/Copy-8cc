@@ -24,3 +24,4 @@
 20161103/Remove struct Var and merge it with struct Ast.
 20161103/Added char.
 20161104/Add lex.c and string.c.
+20161104/Add declaration.
