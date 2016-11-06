@@ -45,7 +45,7 @@ static Token *make_char(char c) {
 static int getc_nonspace(void) {
   int c;
   while ((c = getc(stdin)) != EOF) {
-    if (isspace(c) || c == '\n' || c ==  '\r')
+    if (isspace(c) || c == '\n' || c == '\r')
       continue;
     return c;
   }

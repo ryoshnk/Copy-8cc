@@ -1,27 +1,40 @@
 20161020/Initial checkin
-  ・gcc -S *.c でテキストとしてアセンブラを出力可能
-  ・8cc mymain を　_mymain に変更
+  gcc -S *.c でテキストとしてアセンブラを出力可能
+  8cc mymain を　_mymain に変更
+
 20161022/Added string literal.
-  ・アセンブラの説明は右記を参照 http://www.picfun.com/c30/c3006.html
-  ・アセンブラの説明は右記を参照 http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11116766816	
-  ・gccのバージョンをgcc49に変更
-  ・コンパイル時にシンボル参照がないエラーが出るため、driver.c,test.shにプリプロセッサを制御する内容をついか
-  ・8cc.c が出力するtmp.s の内容を一部変更
+  アセンブラの説明は右記を参照 http://www.picfun.com/c30/c3006.html
+  アセンブラの説明は右記を参照 http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q11116766816	
+  gccのバージョンをgcc49に変更
+  コンパイル時にシンボル参照がないエラーが出るため、driver.c,test.shにプリプロセッサを制御する内容をついか
+  8cc.c が出力するtmp.s の内容を一部変更
+
 20161025/Added + and -.
-  ・test.sh内の正規表現を変更
+  test.sh内の正規表現を変更
+
 20161029/Introduce AST.
-  ・コンパイル時にシンボル参照がないエラーを、test.shのtestでオプションで判定し回避
+  コンパイル時にシンボル参照がないエラーを、test.shのtestでオプションで判定し回避
+
 20161029/Added * and /.
+
 20161029/Remove string literal. Add varaible.
-   ・アセンブラについて、右記を参照 http://qiita.com/edo_m18/items/83c63cd69f119d0b9831
+  アセンブラについて、右記を参照 http://qiita.com/edo_m18/items/83c63cd69f119d0b9831
+
 20161030/Add function call.
-   ・アセンブラについて、右記を参照 https://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/GAS%E3%81%A7%E3%81%AE%E6%96%87%E6%B3%95
-   ・アセンブラのセクションについて、右記を参照 http://www.ertl.jp/~takayuki/readings/info/no02.html
-   ・http://milkpot.sakura.ne.jp/note/x86.html
+  アセンブラについて、右記を参照 https://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/GAS%E3%81%A7%E3%81%AE%E6%96%87%E6%B3%95
+  アセンブラのセクションについて、右記を参照 http://www.ertl.jp/~takayuki/readings/info/no02.html
+  http://milkpot.sakura.ne.jp/note/x86.html
+
 20161103/Reintroduce string.
-   ・test.shのL77が通らないが、L78が通るためのちに原因調査
-   ・.stirngではエラーが出るため、.ascizを代用
+  test.shのL77が通らないが、L78が通るためのちに原因調査
+  stirngではエラーが出るため、.ascizを代用
+
 20161103/Remove struct Var and merge it with struct Ast.
 20161103/Added char.
 20161104/Add lex.c and string.c.
 20161104/Add declaration.
+20161105/Add type checking.
+  defineの改行について、右記を参照 http://msmori.blogspot.jp/2011/06/define.html
+  typeof()について、右記を参照 http://www.nurs.or.jp/~sug/soft/super/macro.htm
+
+
