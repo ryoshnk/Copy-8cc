@@ -34,8 +34,9 @@ typedef struct {
   do {                                               \
     if (!(expr)) error("Assertion failed: " #expr);  \
   } while (0)
-  
+
 extern void errorf(char *fmt, ...) __attribute__((noreturn));
+extern void warn(char *fmt, ...);
 
 extern String *make_string(void);
 extern char *get_cstring(String *s);
