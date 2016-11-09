@@ -36,5 +36,5 @@
 20161105/Add type checking.
   defineの改行について、右記を参照 http://msmori.blogspot.jp/2011/06/define.html
   typeof()について、右記を参照 http://www.nurs.or.jp/~sug/soft/super/macro.htm
-
+201611/08/Add pointer.
 
