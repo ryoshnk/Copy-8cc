@@ -1,4 +1,4 @@
-CFLAGS=-Wall -std=gnu99 -g
+CFLAGS=-Wall -std=gnu99 -g -O0
 OBJS=lex.o string.o util.o
 
 8cc: 8cc.h main.o $(OBJS)

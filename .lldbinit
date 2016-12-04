@@ -1,0 +1,2 @@
+command script import ./debug.py
+settings set target.input-path .stdin.txt

@@ -38,3 +38,15 @@
   typeof()について、右記を参照 http://www.nurs.or.jp/~sug/soft/super/macro.htm
 20161108/Add pointer.
 20161109/Remove string type. Add array type.
+20161112/Add array initializer. Distingish global/local vars.
+  アセンブリの動作について右記を参照 http://vanya.jp.net/os/x86call/
+  ベースポインタの動作について右記を参照 https://note.mu/nekotricolor/n/n2a247c808275
+  gcc -Sが出力するラベルについて右記を参照 http://stackoverflow.com/questions/9799676/what-do-the-gcc-assembly-output-labels-signify
+20161204/Add array initializer. Distinguish global/local vars.
+  setjmp/longjmpについて、右記を参照 http://www.nurs.or.jp/~sug/soft/super/longjmp.htm
+  setjmp/longjmpについて、右記を参照 http://www.c-tipsref.com/reference/setjmp/longjmp.html
+  8ccの出力結果を./assblr以下に作成する処理を、test.shに追加
+  lea について、右記を参照 http://d.hatena.ne.jp/suu-g/20080505/1210012224
+  lldb 導入
+  lldbにおける, stdin bug 回避のため, .lldbint と debug.pyに、.stdin.txtを
+  一時ファイルとして利用する処理を記載
