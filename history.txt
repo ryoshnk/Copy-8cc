@@ -50,3 +50,4 @@
   lldb 導入
   lldbにおける, stdin bug 回避のため, .lldbint と debug.pyに、.stdin.txtを
   一時ファイルとして利用する処理を記載
+20161205/Split main.c to gen.c and parse.c.
