@@ -51,3 +51,7 @@
   lldbにおける, stdin bug 回避のため, .lldbint と debug.pyに、.stdin.txtを
   一時ファイルとして利用する処理を記載
 20161205/Split main.c to gen.c and parse.c.
+20161210/Add "if" statement.
+  アセンブリのjeを理解するために、下記URLを参照  
+  https://www.grapecity.com/tools/support/powernews/column/clang/010/page02.htm
+  http://dukedog.webcrow.jp/CheatEngineHelp/asm-basics-3.htm
