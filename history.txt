@@ -16,7 +16,6 @@
   コンパイル時にシンボル参照がないエラーを、test.shのtestでオプションで判定し回避
 
 20161029/Added * and /.
-
 20161029/Remove string literal. Add varaible.
   アセンブラについて、右記を参照 http://qiita.com/edo_m18/items/83c63cd69f119d0b9831
 
@@ -31,17 +30,23 @@
 
 20161103/Remove struct Var and merge it with struct Ast.
 20161103/Added char.
+
 20161104/Add lex.c and string.c.
 20161104/Add declaration.
+
 20161105/Add type checking.
   defineの改行について、右記を参照 http://msmori.blogspot.jp/2011/06/define.html
   typeof()について、右記を参照 http://www.nurs.or.jp/~sug/soft/super/macro.htm
+
 20161108/Add pointer.
+
 20161109/Remove string type. Add array type.
+
 20161112/Add array initializer. Distingish global/local vars.
   アセンブリの動作について右記を参照 http://vanya.jp.net/os/x86call/
   ベースポインタの動作について右記を参照 https://note.mu/nekotricolor/n/n2a247c808275
   gcc -Sが出力するラベルについて右記を参照 http://stackoverflow.com/questions/9799676/what-do-the-gcc-assembly-output-labels-signify
+
 20161204/Add array initializer. Distinguish global/local vars.
   setjmp/longjmpについて、右記を参照 http://www.nurs.or.jp/~sug/soft/super/longjmp.htm
   setjmp/longjmpについて、右記を参照 http://www.c-tipsref.com/reference/setjmp/longjmp.html
@@ -50,9 +55,12 @@
   lldb 導入
   lldbにおける, stdin bug 回避のため, .lldbint と debug.pyに、.stdin.txtを
   一時ファイルとして利用する処理を記載
+
 20161205/Split main.c to gen.c and parse.c.
+
 20161210/Add "if" statement.
   アセンブリのjeを理解するために、下記URLを参照  
   https://www.grapecity.com/tools/support/powernews/column/clang/010/page02.htm
   http://dukedog.webcrow.jp/CheatEngineHelp/asm-basics-3.htm
 20161210/Add list.c.
+20161210/Do not put a string for array initializer into data segment.
