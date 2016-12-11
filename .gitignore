@@ -5,3 +5,4 @@ unittest
 ,*
 assblr*
 .stdin.txt
+*.s

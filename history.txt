@@ -64,4 +64,6 @@
   http://dukedog.webcrow.jp/CheatEngineHelp/asm-basics-3.htm
 20161210/Add list.c.
 20161210/Do not put a string for array initializer into data segment.
+
 20161211/Add function declaration.
+20161211/Add omitted array dimension declaration.
