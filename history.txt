@@ -67,3 +67,4 @@
 
 20161211/Add function declaration.
 20161211/Add omitted array dimension declaration.
+20161211/Add "for" loop and comparison operators.
