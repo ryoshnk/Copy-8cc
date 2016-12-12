@@ -69,3 +69,5 @@
 20161211/Add omitted array dimension declaration.
 20161211/Add "for" loop and comparison operators.
 20161211/Add "return" statement.
+
+20161212/Support assignment to pointer dereference.
