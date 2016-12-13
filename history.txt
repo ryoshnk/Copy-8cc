@@ -71,3 +71,11 @@
 20161211/Add "return" statement.
 
 20161212/Support assignment to pointer dereference.
+
+20161213/Add "==" operator. Fix a bug in arithmetic op.
+  アセンブリのcmp, sete, setl, setg を理解するため、下記を参照
+  http://www5c.biglobe.ne.jp/~ecb/assembler/4_2.html
+  http://x86.renejeschke.de/html/file_module_x86_id_288.html
+
+
+

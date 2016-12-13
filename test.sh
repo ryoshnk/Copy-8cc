@@ -70,15 +70,9 @@ make -s 8cc
 
 # Emit Assblr
 c=0
-emit '1+2*3+4;'
-emit  '1;'
-emit 'int a=3;'
-emit 'int a=3;int *b=&a;*b;'
-emit 'int a[3]={20,30,40};int *b=a+1;*b;'
-emit 'int a=3;int *b=&a;*b+5;'
-emit 'if(1){printf("x");}else{printf("y");}1;'
-emit 'if(0){printf("x");}else{printf("y");}1;'
-emit 'for(int a=1;2;7){5;}'
+emit '1<2;'
+emit '1>3;'
+emit '2==2;'
 
 # Parser
 testast '(int)f(){1;}' '1;'
@@ -121,10 +115,14 @@ test 4 '4/2+6/3;'
 test 4 '24/2/3;'
 test 98 "'a'+1;"
 test 2 '1;2;'
+test -1 'int a=0-1;a;'
+test 0 'int a=0-1;1+a;'
 
 # Comparison
 test 1 '1<2;'
 test 0 '2<1;'
+test 1 '1==1;'
+test 0 '1==2;'
 
 # Declaration
 test 3 'int a=1;a+2;'
@@ -145,7 +143,6 @@ test 97 'char *c="ab";*c;'
 test 98 'char *c="ab"+1;*c;'
 test 122 'char s[]="xyz";char *c=s+2;*c;'
 test 65 'char s[]="xyz";*s=65;*s;'
-emit 'char s[]="xyz";*s=65;*s;'
 
 # If statement
 test 'a1' 'if(1){printf("a");}1;'
@@ -167,6 +164,7 @@ testf 21 'int g(int a,int b,int c,int d,int e,int f){a+b+c+d+e+f;} int f(){g(1,2
 testf 79 'int g(int a){a;} int f(){g(79);}'
 testf 98 'int g(int *p){*p;} int f(){int a[]={98};g(a);}'
 testf '99 98 97 1' 'int g(int *p){printf("%d ",*p);p=p+1;printf("%d ",*p);p=p+1;printf("%d ",*p);1;} int f(){int a[]={1,2,3};int *p=a;*p=99;p=p+1;*p=98;p=p+1;*p=97;g(a);}'
+testf '99 98 97 1' 'int g(int *p){printf("%d ",*p);p=p+1;printf("%d ",*p);p=p+1;printf("%d ",*p);1;} int f(){int a[3];int *p=a;*p=99;p=p+1;*p=98;p=p+1;*p=97;g(a);}'
 
 testfail '0abc;'
 testfail '1+;'
