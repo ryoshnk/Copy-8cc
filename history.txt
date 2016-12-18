@@ -76,8 +76,13 @@
   アセンブリのcmp, sete, setl, setg を理解するため、下記を参照
   http://www5c.biglobe.ne.jp/~ecb/assembler/4_2.html
   http://x86.renejeschke.de/html/file_module_x86_id_288.html
+
 20161217/Add sample/nqueen.c
-  
+
+20161218/Fix a bug in array.
+  printfの変換指定子が機能していないため、テストに失敗
+  のちに対応
+
 
 
 

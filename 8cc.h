@@ -33,9 +33,7 @@ enum {
   AST_LITERAL,
   AST_STRING,
   AST_LVAR,
-  AST_LREF,
   AST_GVAR,
-  AST_GREF,
   AST_FUNCALL,
   AST_FUNC,
   AST_DECL,
@@ -133,8 +131,9 @@ typedef struct Ast {
       struct Ast *forinit;
       struct Ast *forcond;
       struct Ast *forstep;
-      struct Ast *forbody;
+      struct List *forbody;
     };
+    // Return statement
     struct Ast *retval;
   };
 } Ast;

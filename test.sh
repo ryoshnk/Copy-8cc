@@ -51,18 +51,35 @@ function testfail {
   fi
 }
 
-function emit {
+function cleardir {
   if [ $c -eq 0 ]; then 
     rm -rf "./assblr"
     mkdir "./assblr"
   fi
+}
+
+function getfname {
   if [ $c -lt 10 ]; then
-    fname="./assblr/""0""$c.s"
+    ret="./assblr/""0""$c.s"
   else
-    fname="./assblr/$c.txt"
+    ret="./assblr/$c.txt"
   fi
+  echo $ret
+}
+
+function emit {
+  cleardir
+  fname=`getfname`
   echo "int f(){$1}" > "$fname"
   echo "int f(){$1}" | ./8cc >> "$fname"
+  c=`expr $c + 1`
+}
+
+function emitf {
+  cleardir
+  fname=`getfname`
+  echo "$1" > "$fname"
+  echo "$1" | ./8cc >> "$fname"
   c=`expr $c + 1`
 }
 
@@ -73,6 +90,8 @@ c=0
 emit '1<2;'
 emit '1>3;'
 emit '2==2;'
+emitf 'int mymain(int a){printf("%d",a);}'
+
 
 # Parser
 testast '(int)f(){1;}' '1;'
@@ -83,15 +102,17 @@ testast '(int)f(){(+ (/ 4 2) (/ 6 3));}' '4/2+6/3;'
 testast '(int)f(){(/ (/ 24 2) 4);}' '24/2/4;'
 testast '(int)f(){(decl int a 3);}' 'int a=3;'
 testast "(int)f(){(decl char c 'a');}" "char c='a';"
-testast '(int)f(){(decl char* s "abcd");}' 'char *s="abcd";'
-testast '(int)f(){(decl char[5] s "asdf");}' 'char s[5]="asdf";'
-testast '(int)f(){(decl char[5] s "asdf");}' 'char s[]="asdf";'
-testast '(int)f(){(decl int[3] a {1,2,3});}' 'int a[3]={1,2,3};'
-testast '(int)f(){(decl int[3] a {1,2,3});}' 'int a[]={1,2,3};'
+testast '(int)f(){(decl *char s "abcd");}' 'char *s="abcd";'
+testast '(int)f(){(decl [5]char s "asdf");}' 'char s[5]="asdf";'
+testast '(int)f(){(decl [5]char s "asdf");}' 'char s[]="asdf";'
+testast '(int)f(){(decl [3]int a {1,2,3});}' 'int a[3]={1,2,3};'
+testast '(int)f(){(decl [3]int a {1,2,3});}' 'int a[]={1,2,3};'
+testast '(int)f(){(decl [3][5]int a);}' 'int a[3][5];'
+testast '(int)f(){(decl [5]*int a);}' 'int *a[5];'
 testast '(int)f(){(decl int a 1);(decl int b 2);(= a (= b 3));}' 'int a=1;int b=2;a=b=3;'
 testast '(int)f(){(decl int a 3);(& a);}' 'int a=3;&a;'
 testast '(int)f(){(decl int a 3);(* (& a));}' 'int a=3;*&a;'
-testast '(int)f(){(decl int a 3);(decl int* b (& a));(* b);}' 'int a=3;int *b=&a;*b;'
+testast '(int)f(){(decl int a 3);(decl *int b (& a));(* b);}' 'int a=3;int *b=&a;*b;'
 testast '(int)f(){(if 1 {2;});}' 'if(1){2;}'
 testast '(int)f(){(if 1 {2;} {3;});}' 'if(1){2;}else{3;}'
 testast '(int)f(){(for (decl int a 1) 3 7 {5;});}' 'for(int a=1;3;7){5;}'
@@ -100,6 +121,9 @@ testast "(int)f(){'c';}" "'c';"
 testast '(int)f(){(int)a();}' 'a();'
 testast '(int)f(){(int)a(1,2,3,4,5,6);}' 'a(1,2,3,4,5,6);'
 testast '(int)f(){(return 1);}' 'return 1;'
+testast '(int)f(){(< 1 2);}' '1<2;'
+testast '(int)f(){(> 1 2);}' '1>2;'
+testast '(int)f(){(== 1 2);}' '1==2;'
 
 testastf '(int)f(int c){c;}' 'int f(int c){c;}'
 testastf '(int)f(int c){c;}(int)g(int d){d;}' 'int f(int c){c;} int g(int d){d;}'
@@ -134,8 +158,8 @@ test 20 'int a[]={20,30,40};*a;'
 
 # Function call
 test a3 'printf("a");3;'
-#test xy5 'printf("%s", "xy");5;' # Test failed 
-#test b1 "printf(\"%c\", 'a'+1);1;" # Test failed
+#test xy5 'printf("%s", "xy");5;'   # Test failed becase of printf.
+#test b1 "printf(\"%c\", 'a'+1);1;" # Test failed becase of printf.
 
 # Pointer
 test 61 'int a=61;int *b=&a;*b;'
@@ -143,6 +167,12 @@ test 97 'char *c="ab";*c;'
 test 98 'char *c="ab"+1;*c;'
 test 122 'char s[]="xyz";char *c=s+2;*c;'
 test 65 'char s[]="xyz";*s=65;*s;'
+
+# Array
+test 1 'int a[2][3];int *p=a;*p=1;*p;'
+test 32 'int a[2][3];int *p=a+1;*p=1;int *q=a;*p=32;*(q+3);'
+test 62 'int a[4][5];int *p=a;*(*(a+1)+2)=62;*(p+7);'
+#testf '65 1' 'int g(int x[][3]){printf("%d ",*(*(x+1)+1));} int f(){int a[2][3];int *p=a;*(p+4)=65;g(a);1;}' Test failed beuaseof last "1;" # Test failed becase of printf.
 
 # If statement
 test 'a1' 'if(1){printf("a");}1;'
