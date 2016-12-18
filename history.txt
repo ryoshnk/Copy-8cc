@@ -82,7 +82,7 @@
 20161218/Fix a bug in array.
   printfの変換指定子が機能していないため、テストに失敗
   のちに対応
-
+20161218/Add array subscript.
 
 
 
