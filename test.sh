@@ -93,7 +93,7 @@ emit '2==2;'
 emit 'for(int i=0; i<5; i=i+1){printf("%d",i);}'
 emitf 'int mymain(int a){printf("%d",a);}'
 emit 'int a=65;printf("%d",a);'
-
+emitf 'int a=21;int f(){a;}'
 
 # Parser
 testast '(int)f(){1;}' '1;'
@@ -133,6 +133,7 @@ testast '(int)f(){(! 1);}' '!1;'
 
 testastf '(int)f(int c){c;}' 'int f(int c){c;}'
 testastf '(int)f(int c){c;}(int)g(int d){d;}' 'int f(int c){c;} int g(int d){d;}'
+testastf '(decl int a 3)' 'int a=3;'
 
 # Basic arithmetic
 test 0 '0;'
@@ -153,6 +154,12 @@ test 1 '1<2;'
 test 0 '2<1;'
 test 1 '1==1;'
 test 0 '1==2;'
+
+# Global variable
+testf 21 'int a=21;int f(){a;}'
+testf 22 'int a;int f(){a=22;a;}'
+testf 23 'int a[3];int f(){a[1]=23;a[1];}'
+mtestf 25 'int a[3]={24,25,26};int f(){a[1];}'
 
 # Declaration
 test 3 'int a=1;a+2;'
