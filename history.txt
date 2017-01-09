@@ -59,7 +59,7 @@
 20161205/Split main.c to gen.c and parse.c.
 
 20161210/Add "if" statement.
-  アセンブリのjeを理解するために、下記URLを参照  
+  アセンブリのjeを理解するために、下記を参照  
   https://www.grapecity.com/tools/support/powernews/column/clang/010/page02.htm
   http://dukedog.webcrow.jp/CheatEngineHelp/asm-basics-3.htm
 20161210/Add list.c.
@@ -87,11 +87,17 @@
 20161219 - 20170108
   今までトレースしてきた内容を再度始めから実施
 
-20160108/Add "++" and "--".
-20160108/Add "!".
-20160108/Treat compound statement as AST.
-20160108/Add global variable.
+20170108/Add "++" and "--".
+20170108/Add "!".
+20170108/Treat compound statement as AST.
+20170108/Add global variable.
   ラベルにアンダーバーが付いていないことから、
    Undefined symbols for architecture でテストが通らない.
+
+20170109/Add block scope.
+  ラベルに関するbugfix
+  セクションについて、下記を参照
+  http://d.hatena.ne.jp/suu-g/20080506/1210096168
+
 
 

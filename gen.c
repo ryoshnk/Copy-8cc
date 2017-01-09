@@ -37,7 +37,10 @@ static int ctype_size(Ctype *ctype) {
 
 static void emit_gload(Ctype *ctype, char *label) {
   if (ctype->type == CTYPE_ARRAY) {
-    emit("lea %s(%%rip), %%rax", label);
+    if (ctype->ptr->type == CTYPE_INT)            //fixed to distinguish ctype label
+      emit("lea _%s(%%rip), %%rax", label);
+    else
+      emit("lea %s(%%rip), %%rax", label);
     return;
   }
   char *reg;
@@ -85,7 +88,7 @@ static void emit_gsave(Ast *var) {
     default:
       error("Unknown data size: %s: %d", ast_to_string(var), size);
   }
-  emit("mov %%%s, %s(%%rip)", reg, var->gname);
+  emit("mov %%%s, _%s(%%rip)", reg, var->varname);
 }
 
 static void emit_lsave(Ctype *ctype, int loff, int off) {
@@ -339,12 +342,12 @@ static void emit_expr(Ast *ast) {
 }
 
 void emit_data_section(void) {
-  if (!globals) return;
+  if (list_len(globalenv->vars) == 0) return;
   emit(".data");
-  for (Iter *i = list_iter(globals); !iter_end(i);) {
+  for (Iter *i = list_iter(globalenv->vars); !iter_end(i);) {
     Ast *v = iter_next(i);
     if (v->type == AST_STRING) {
-      emit_label("_%s:", v->slabel);
+      emit_label("%s:", v->slabel);
       emit(".ascii \"%s\\0\"", quote_cstring(v->sval)); // [Fixed from] printf(".ascii \"%s\"\n", quote_cstring(p->sval));
     } else if (v->type != AST_GVAR) {
       error("internal error: %s", ast_to_string(v));
@@ -368,8 +371,8 @@ static void emit_data_int(Ast *data) {
 }
 
 static void emit_data(Ast *v) {
-  emit_label(".globl _%s", v->declvar->gname);
-  emit_label("_%s:", v->declvar->gname);
+  emit_label(".globl _%s", v->declvar->varname);
+  emit_label("_%s:", v->declvar->varname);
   if (v->declinit->type == AST_ARRAY_INIT) {
     for (Iter *iter = list_iter(v->declinit->arrayinit); !iter_end(iter);) {
       emit_data_int(iter_next(iter));
@@ -381,7 +384,7 @@ static void emit_data(Ast *v) {
 }
 
 static void emit_bss(Ast *v) {
-  emit(".lcomm %s, %d", v->declvar->gname, ctype_size(v->declvar->ctype));
+  emit(".lcomm _%s, %d", v->declvar->varname, ctype_size(v->declvar->ctype));
 }
 
 static void emit_global_var(Ast *v) {
@@ -407,7 +410,7 @@ static void emit_func_prologue(Ast *func) {
     off += ceil8(ctype_size(v->ctype));
     v->loff = off;
   }
-  for (Iter *i = list_iter(func->locals); !iter_end(i);) {
+  for (Iter *i = list_iter(func->localvars); !iter_end(i);) {
     Ast *v = iter_next(i);
     off += ceil8(ctype_size(v->ctype));
     v->loff = off;

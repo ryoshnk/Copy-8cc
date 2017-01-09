@@ -87,13 +87,11 @@ make -s 8cc
 
 # Emit Assblr
 c=0
-emit '1<2;'
-emit '1>3;'
-emit '2==2;'
-emit 'for(int i=0; i<5; i=i+1){printf("%d",i);}'
-emitf 'int mymain(int a){printf("%d",a);}'
 emit 'int a=65;printf("%d",a);'
 emitf 'int a=21;int f(){a;}'
+emitf 'int a;int f(){a=22;a;}'
+emitf 'int a[3];int f(){a[1]=23;a[1];}'
+emitf 'int f(){char *c="ab";*c;}'
 
 # Parser
 testast '(int)f(){1;}' '1;'
@@ -159,7 +157,7 @@ test 0 '1==2;'
 testf 21 'int a=21;int f(){a;}'
 testf 22 'int a;int f(){a=22;a;}'
 testf 23 'int a[3];int f(){a[1]=23;a[1];}'
-mtestf 25 'int a[3]={24,25,26};int f(){a[1];}'
+testf 25 'int a[3]={24,25,26};int f(){a[1];}'
 
 # Declaration
 test 3 'int a=1;a+2;'
@@ -171,8 +169,8 @@ test 20 'int a[]={20,30,40};*a;'
 
 # Function call
 test a3 'printf("a");3;'
-#test xy5 'printf("%s", "xy");5;'   # Test failed becase of printf.
-#test b1 "printf(\"%c\", 'a'+1);1;" # Test failed becase of printf.
+#test xy5 'printf("%s", "xy");5;'   # Test failed becase of printf call.
+#test b1 "printf(\"%c\", 'a'+1);1;" # Test failed becase of printf call.
 
 # Pointer
 test 61 'int a=61;int *b=&a;*b;'
@@ -214,6 +212,10 @@ test 14 'int a=15;a--;a;'
 # Boolean operators
 test 0 '!1;'
 test 1 '!0;'
+
+# Block scope
+test 31 'int a=31;{int a=64;}a;'
+test 64 'int a=31;{int a=64;a;}'
 
 # Function parameter
 testf '102' 'int f(int n){n;}'
