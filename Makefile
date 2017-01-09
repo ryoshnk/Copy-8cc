@@ -13,10 +13,6 @@ test: unittest nqueen
 	./unittest
 	./test.sh
 
-test2: unittest
-	./unittest
-	./test.sh
-
 clean:
 	rm -f 8cc *.o tmp.* unittest nqueen.s nqueen
 
