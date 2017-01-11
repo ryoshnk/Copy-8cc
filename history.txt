@@ -106,6 +106,8 @@
   のちに対応
 20170109/Move debug code to debug.c.
 
+20170112/Add struct.
+
 
 
 
