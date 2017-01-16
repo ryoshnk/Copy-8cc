@@ -108,6 +108,8 @@
 
 20170112/Add struct.
 
+20170116/Add struct.(bug fix)
+
 
 
 

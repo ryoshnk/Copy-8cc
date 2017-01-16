@@ -64,7 +64,7 @@ static void emit_gload(Ctype *ctype, char *label, int off) {
       error("Unknown data size: %s: %d", ctype_to_string(ctype), size);
   }
   if (off)
-    emit("mov _%s+%d(%%rip), %%%s", label, reg);
+    emit("mov _%s+%d(%%rip), %%%s", label, off, reg);
   else
     emit("mov _%s(%%rip), %%%s", label, reg);
 }
@@ -348,8 +348,12 @@ static void emit_expr(Ast *ast) {
         case AST_LVAR:
           emit("lea %d(%%rbp), %%rax", -ast->operand->loff);
           break;
-        case AST_GVAR:
-          emit("lea %s(%%rip), %%rax", ast->operand->glabel);
+        case AST_GVAR: {
+          if (ast->operand->ctype->type == CTYPE_STRUCT)
+            emit("lea _%s(%%rip), %%rax", ast->operand->glabel);
+          else
+            emit("lea %s(%%rip), %%rax", ast->operand->glabel);
+          }
           break;
         default:
           error("internal error");

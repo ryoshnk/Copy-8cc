@@ -92,6 +92,7 @@ emitf 'int a=21;int f(){a;}'
 emitf 'int a;int f(){a=22;a;}'
 emitf 'int a[3];int f(){a[1]=23;a[1];}'
 emitf 'int f(){char *c="ab";*c;}'
+emitf 'struct tag {int a;} x; int f() { struct tag *p = &x; x.a = 78; (*p).a;}'
 
 # Parser
 testast '(int)f(){1;}' '1;'
@@ -243,6 +244,21 @@ test 0 '0 && 55;'
 # Bit operators
 test 3 '1|2;'
 test 1 '1&3;'
+
+# Struct
+test 61 'struct {int a;} x; x.a = 61; x.a;'
+test 63 'struct {int a; int b;} x; x.a = 61; x.b = 2; x.a + x.b;'
+test 67 'struct {int a; struct {char b; int c;} y; } x; x.a = 61; x.y.b = 3; x.y.c = 3; x.a + x.y.b + x.y.c;'
+test 67 'struct tag {int a; struct {char b; int c;} y; } x; struct tag s; s.a = 61; s.y.b = 3; s.y.c = 3; s.a + s.y.b + s.y.c;'
+test 68 'struct tag {int a;} x; struct tag *p = &x; x.a = 68; (*p).a;'
+test 69 'struct tag {int a;} x; struct tag *p = &x; (*p).a = 69; x.a;'
+test 71 'struct tag {int a; int b;} x; struct tag *p = &x; x.b = 71; (*p).b;'
+test 72 'struct tag {int a; int b;} x; struct tag *p = &x; (*p).b = 72; x.b;'
+testf 67 'struct {int a; struct {char b; int c;} y; } x; int f() { x.a = 61; x.y.b = 3; x.y.c = 3; x.a + x.y.b + x.y.c;}'
+testf 78 'struct tag {int a;} x; int f() { struct tag *p = &x; x.a = 78; (*p).a;}'
+testf 79 'struct tag {int a;} x; int f() { struct tag *p = &x; (*p).a = 79; x.a;}'
+testf 81 'struct tag {int a; int b;} x; int f() { struct tag *p = &x; x.b = 81; (*p).b;}'
+testf 82 'struct tag {int a; int b;} x; int f() { struct tag *p = &x; (*p).b = 82; x.b;}'
 
 testfail '0abc;'
 testfail '1+;'
