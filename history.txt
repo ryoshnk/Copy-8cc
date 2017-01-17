@@ -110,6 +110,8 @@
 
 20170116/Add struct.(bug fix)
 
+20170117/Show call stack for each instruction.
+
 
 
 
