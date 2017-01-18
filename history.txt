@@ -114,6 +114,7 @@
 
 20170119/Fix a bug in operator precedence of [].
 20170119/Add ->.
+20170119/Remove ctype_size().
 
 
 
