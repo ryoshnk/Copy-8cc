@@ -112,6 +112,8 @@
 
 20170117/Show call stack for each instruction.
 
+20170119/Fix a bug in operator precedence of [].
+
 
 
 
