@@ -161,6 +161,9 @@ test 0 '2<1;'
 test 1 '1==1;'
 test 0 '1==2;'
 
+# Assignment
+test '1 1 1 4' 'int a;int b;int c; a=b=c=1; printf("%d %d %d ",a,b,c); 4;'
+
 # Global variable
 testf 21 'int a=21;int f(){a;}'
 testf 22 'int a;int f(){a=22;a;}'
@@ -272,6 +275,11 @@ testf 85 'struct tag {int a; int b;} x; int f() { struct tag a[3]; a[1].b = 85; 
 testfail '0abc;'
 testfail '1+;'
 testfail '1=2;'
+
+# Union
+test 90 'union {int a; int b;} x; x.a = 90; x.b;'
+test 256 'union {char a[4]; int b;} x; x.b=0; x.a[1]=1; x.b;';
+test 256 'union {char a[4]; int b;} x; x.a[0]=x.a[1]=x.a[2]=x.a[3]=0; x.a[1]=1; x.b;';
 
 # & is only applicable to an lvalue
 testfail '&"a";'
